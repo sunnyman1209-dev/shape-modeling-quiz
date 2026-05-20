@@ -21,7 +21,7 @@ export const quizData: QuizItem[] = [
   { q: "11. 어셈블리 조립 후 실제 제품이 조립되지 않을 수 있는 문제를 확인하는 명령어는?", options: ["물성치", "간섭 체크", "두께 검사", "대칭 검사"], answer: 1, rationale: "간섭 체크는 단품·서브 어셈블리 간 간섭 여부를 확인하는 명령어입니다." },
   { q: "12. 선택한 형상의 겉면적, 질량, 무게중심 등을 알려 주는 정보 명령어는?", options: ["측정", "물성치", "간섭 체크", "섹션"], answer: 1, rationale: "물성치 명령어는 면적, 질량, 무게중심, 관성 모멘트 등을 제공합니다." },
   { q: "13. 우리나라에서 일반적으로 많이 사용하는 투상법은?", options: ["제1각법", "제3각법", "등각투상법", "축측투상법"], answer: 1, rationale: "제3각법은 정면도·평면도·우측면도가 기본이며 우리나라에서 보편적입니다." },
-  { q: "14. ISO 규격에 따른 도면 용지 크기 분류에 포함되지 않는 것은?", options: ["A3", "A4", "A5", "A2"], answer: 2, rationale: "도면 크기는 A0, A1, A2, A3, A4로 분류됩니다. A5는 해당 분류에 없습니다." },
+  { q: "14. ISO 규격에 따른 도면 용지 크기 분류에 포함되지 않는 것은?", options: ["A3", "A4", "B5", "A2"], answer: 2, rationale: "ISO A계열 도면 용지는 A0~A4가 기본입니다. B5는 A계열 분류에 포함되지 않습니다." },
   { q: "15. Inventor에서 파트 모델 파일의 확장자는?", options: [".CATpart", ".ipt", ".sldprt", ".prt"], answer: 1, rationale: "Inventor 파트는 .ipt, 어셈블리는 .iam, 도면은 .dwg/.idw입니다." },
   { q: "16. 3D 솔리드 모델의 국제 표준 중립 교환 형식으로 널리 쓰이는 것은?", options: ["BMP", "STEP", "JPEG", "GIF"], answer: 1, rationale: "STEP은 국제 표준 중립 형식으로 솔리드 모델 교환에 많이 사용됩니다." },
   { q: "17. CAM 가공·3D 프린터 등에 형상 보존성이 좋아 많이 쓰이는 형식은?", options: ["IGES", "STL", "DWG", "BMP"], answer: 1, rationale: "STL은 급속조형·3D 프린터·CAM 연동에 널리 사용됩니다." },
