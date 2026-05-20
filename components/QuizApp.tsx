@@ -74,12 +74,17 @@ export default function QuizApp() {
           subject: QUIZ_SUBJECT
         })
       });
-      const data = (await res.json()) as { ok?: boolean; error?: string };
+      const data = (await res.json()) as {
+        ok?: boolean;
+        error?: string;
+        mode?: "local" | "sheet";
+      };
       if (res.ok && data.ok) {
-        setSummary(
-          (prev) =>
-            `${prev}<br/><span class="text-green-700 text-sm">(성적이 선생님 성적표(스프레드시트)에 저장되었습니다.)</span>`
-        );
+        const savedMsg =
+          data.mode === "local"
+            ? "(성적이 선생님 PC 성적 파일에 저장되었습니다.)"
+            : "(성적이 선생님 성적표에 저장되었습니다.)";
+        setSummary((prev) => `${prev}<br/><span class="text-green-700 text-sm">${savedMsg}</span>`);
         setSubmitted(true);
       } else {
         setSummary(

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { appendScoreToGoogleSheet } from "@/lib/grades/google-sheet";
+import { saveScore } from "@/lib/grades/save-score";
 import { QUIZ_SUBJECT } from "@/lib/quiz-data";
 
 const bodySchema = z.object({
@@ -20,16 +20,14 @@ export async function POST(request: Request) {
     }
 
     const { studentId, studentName, score, subject } = parsed.data;
-    const payload = {
+    const result = await saveScore({
       studentId,
       studentName,
       score,
       subject: subject ?? QUIZ_SUBJECT
-    };
+    });
 
-    await appendScoreToGoogleSheet(payload);
-
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, ...result });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Server error";
     console.error("submit-score error:", e);
