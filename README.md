@@ -1,48 +1,53 @@
 # 형상모델링 검토 작업장 평가
 
-NCS LM1501020213 · 20문항 · Vercel 배포 · **Google 스프레드시트(엑셀) 성적 수집**
+학생은 **언제든** 링크만 열고 시험 → 제출 내역은 **한 곳에 쌓임** → 교사는 나중에 **대시보드에서만** 확인.
 
-## 학생 접속
+## 학생 접속 (고정 링크)
 
 https://shape-modeling-quiz.vercel.app
 
-## 성적표(엑셀) 연결 방법
+(로그인 없음 · 학번·이름만 입력)
 
-### 1) 성적표 파일 만들기
+---
 
-1. [Google 스프레드시트](https://sheets.google.com) 새 문서 생성  
-2. `docs/형상모델링검토_성적표_템플릿.csv` 를 가져오기 하거나, 1행에 직접 입력:
+## 성적이 쌓이는 곳 (택 1)
 
-   `제출일시 | 학번 | 이름 | 과목 | 점수`
+**우선순위:** 학교 PC 모드(`LOCAL_GRADES`) 켜져 있으면 → 바탕화면 CSV.  
+아니면 **Supabase** → **Google 스프레드시트** 순으로 설정된 것을 사용합니다.
 
-3. 파일 이름 예: `형상모델링검토_성적표`
+### A) Supabase (스프레드시트 없이 추천)
 
-엑셀(.xlsx)로 관리하려면 시트에서 **파일 → 다운로드 → Microsoft Excel** 로 저장하면 됩니다.
+1. [Supabase](https://supabase.com) 프로젝트 → **SQL Editor**
+2. `supabase/quiz_scores.sql` 전체 실행
+3. **Project Settings → API** 에서 URL과 **service_role** 키 복사
+4. **Vercel** → `shape-modeling-quiz` → Environment Variables:
 
-### 2) Apps Script 연결
+   | 이름 | 값 |
+   |------|-----|
+   | `SUPABASE_URL` | Project URL |
+   | `SUPABASE_SERVICE_ROLE_KEY` | service_role 키 |
 
-1. 스프레드시트 → **확장 프로그램 → Apps Script**
-2. `scripts/grade-sheet-webhook.gs` 내용 전체 붙여넣기 → 저장
-3. **배포 → 새 배포** → 유형 **웹 앱**
-   - 실행: 나
-   - 액세스: **모든 사용자**
-4. 생성된 **웹 앱 URL** 복사
+5. **Redeploy**
 
-### 3) Vercel 환경 변수
+**나중에 확인:** Supabase 대시보드 → **Table Editor** → `quiz_scores` (필요하면 CSV 내보내기)
 
-프로젝트 **Settings → Environment Variables**:
+### B) Google 스프레드시트
 
-| 이름 | 값 |
-|------|-----|
-| `GOOGLE_SHEETS_WEBHOOK_URL` | 위 웹 앱 URL |
+`README` 하단 또는 `docs/형상모델링검토_스프레드시트_연동_안내.md` 참고.  
+`GOOGLE_SHEETS_WEBHOOK_URL`만 넣어도 됩니다 (Supabase 없을 때).
 
-저장 후 **Redeploy** (재배포) 1회.
+---
+
+## 학교 PC만 쓸 때
+
+바탕화면 **`형상모델링검토_학교PC_시작.bat`** → 나온 주소로 접속. 성적은 **`형상모델링검토_성적.csv`**.
+
+---
 
 ## 로컬 개발
 
 ```bash
 npm install
 cp .env.example .env.local
-# .env.local 에 GOOGLE_SHEETS_WEBHOOK_URL 입력
 npm run dev
 ```

@@ -13,3 +13,6 @@ create index if not exists quiz_scores_subject_idx on public.quiz_scores (subjec
 create index if not exists quiz_scores_student_id_idx on public.quiz_scores (student_id);
 
 alter table public.quiz_scores enable row level security;
+
+-- 서버(Vercel)는 service_role 키로 삽입하므로 RLS는 anon 사용자만 차단합니다.
+-- Table Editor에서 직접 보시려면 대시보드에서 service role 또는 테이블 UI를 사용하세요.

@@ -77,19 +77,26 @@ export default function QuizApp() {
       const data = (await res.json()) as {
         ok?: boolean;
         error?: string;
-        mode?: "local" | "sheet";
+        mode?: "local" | "sheet" | "db";
       };
       if (res.ok && data.ok) {
         const savedMsg =
           data.mode === "local"
-            ? "(성적이 선생님 PC 성적 파일에 저장되었습니다.)"
-            : "(성적이 선생님 성적표에 저장되었습니다.)";
+            ? "(성적이 선생님 PC 파일에 저장되었습니다.)"
+            : data.mode === "db"
+              ? "(제출이 완료되었습니다.)"
+              : "(성적이 기록되었습니다.)";
         setSummary((prev) => `${prev}<br/><span class="text-green-700 text-sm">${savedMsg}</span>`);
         setSubmitted(true);
       } else {
+        const hint =
+          data.error?.includes("GOOGLE_SHEETS_WEBHOOK_URL") ||
+          data.error?.includes("성적 저장소")
+            ? "Vercel 환경 변수(Supabase 또는 스프레드시트)를 확인하거나, 학교 PC 모드 배치 파일로 접속해 보세요."
+            : (data.error ?? "서버 설정 확인");
         setSummary(
           (prev) =>
-            `${prev}<br/><span class="text-amber-700 text-sm">(채점 완료 · 성적 전송 실패: ${data.error ?? "서버 설정 확인"})</span>`
+            `${prev}<br/><span class="text-amber-700 text-sm">(채점 완료 · 성적 전송 실패: ${hint})</span>`
         );
       }
     } catch {
