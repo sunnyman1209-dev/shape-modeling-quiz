@@ -1,11 +1,14 @@
 # 형상모델링 검토 작업장 평가
 
-**선생님 할 일 최소 정리:** 바탕화면 `형상모델링퀴즈_선생님만.md` 또는 아래 표만 보시면 됩니다.
+**선생님 할 일 최소:**  
+① `.env.local.example` → `.env.local` 로 복사 후 Supabase에서 **3줄만** 붙여넣기 → ② `npm run setup:supabase` 한 번.
 
-| 처음 1회 | Supabase에서 `quiz_scores.sql` 실행 → Vercel에 `SUPABASE_URL`·`SUPABASE_SERVICE_ROLE_KEY` 2개 넣고 Redeploy |
-|----------|----------------------------------------------------------------------------------------------------------|
-| 매 수업 | 없음 — 학생에게 `https://shape-modeling-quiz.vercel.app` 만 알려 주기 |
-| 성적 확인 | Supabase → Table Editor → `quiz_scores` |
+| 처음 1회 | `.env.local` 채운 뒤 `npm run setup:supabase` (테이블 + Vercel 변수 + 배포) |
+|----------|-----------------------------------------------------------------------------|
+| 매 수업 | 없음 — 학생에게 `https://shape-modeling-quiz.vercel.app` 만 |
+| 성적 | Supabase → Table Editor → `quiz_scores` |
+
+상세: `docs/선생님_할일_최소.md` · 바탕화면 `형상모델링퀴즈_선생님만.md`
 
 ---
 
