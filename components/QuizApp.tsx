@@ -78,7 +78,7 @@ export default function QuizApp() {
       if (res.ok && data.ok) {
         setSummary(
           (prev) =>
-            `${prev}<br/><span class="text-green-700 text-sm">(성적이 선생님께 전송되었습니다.)</span>`
+            `${prev}<br/><span class="text-green-700 text-sm">(성적이 선생님 성적표(스프레드시트)에 저장되었습니다.)</span>`
         );
         setSubmitted(true);
       } else {

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { appendScoreToGoogleSheet } from "@/lib/grades/google-sheet";
 import { QUIZ_SUBJECT } from "@/lib/quiz-data";
-import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 const bodySchema = z.object({
   studentId: z.string().trim().min(1).max(32),
@@ -20,23 +20,19 @@ export async function POST(request: Request) {
     }
 
     const { studentId, studentName, score, subject } = parsed.data;
-    const supabase = getSupabaseAdmin();
-
-    const { error } = await supabase.from("quiz_scores").insert({
-      student_id: studentId,
-      student_name: studentName,
+    const payload = {
+      studentId,
+      studentName,
       score,
       subject: subject ?? QUIZ_SUBJECT
-    });
+    };
 
-    if (error) {
-      console.error("quiz_scores insert error:", error);
-      return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
-    }
+    await appendScoreToGoogleSheet(payload);
 
     return NextResponse.json({ ok: true });
   } catch (e) {
+    const message = e instanceof Error ? e.message : "Server error";
     console.error("submit-score error:", e);
-    return NextResponse.json({ ok: false, error: "Server error" }, { status: 500 });
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
